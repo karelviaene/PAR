@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<#-- Import common macros and functions -->
+<!-- Import common macros and functions -->
 <#import "macros_common.ftl" as com>
 <#import "macros_csr.ftl" as csr>
 <#import "macros_pnec.ftl" as pnec>
 
-<!-- CSR main template file -->
+<!-- PAR main template file -->
 <#assign locale = "en" />
 <#assign sysDateTime = .now>
 
@@ -37,22 +37,20 @@
         </cover>
     </info>
 	
-    <chapter label="2">
-		<title role="HEAD-2">ASSESSMENT REPORT</title>
-        <section>
-            <title role="HEAD-2">Physical, chemical and technical properties</title>
-           
-        </section>
-            
-	</chapter>
+    <chapter label="1">
+		<title role="HEAD-1">ASSESSMENT REPORT</title>
+            <#include "02_PAR_phys_chem_properties.ftl" encoding="UTF-8" />
+			<@com.emptyLine/>
 		
+            <#include "02_PAR_Skin.ftl" encoding="UTF-8" />
+	</chapter>
 
 
 </book>
 
 <!-- Macros and functions -->
 
-<#-- Macros to separate documents into three lists: 'study results', 'data waiving', 'testing proposal' -->
+<!-- Macros to separate documents into three lists: 'study results', 'data waiving', 'testing proposal' -->
 
 <#macro populateResultAndDataWaivingAndTestingProposalStudyLists studyList>
 	<#assign resultStudyList = [] />

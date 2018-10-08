@@ -45,27 +45,23 @@
 
 <#macro studyRemarksColumn study>
 	<para>
-		<@com.picklist study.AdministrativeData.Reliability/>
+		<@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
 	</para>
+</#macro>
+
+<#macro studyTestMaterial study>
 	<para>
-		<@com.picklist study.AdministrativeData.PurposeFlag/>
+		Test material: <@testMaterialInformation study.MaterialsAndMethods.TestMaterials.TestMaterialInformation/>
 	</para>
+</#macro>
+
+
+<#macro studyReference study>
 	<para>
-		<@com.picklist study.AdministrativeData.StudyResultType/>
-	</para>
-	<para>
-	<@com.emptyLine/>
-		<emphasis role="bold">Test material</emphasis>
-		<?linebreak?>
-		<@testMaterialInformation study.MaterialsAndMethods.TestMaterials.TestMaterialInformation/>
-	</para>
-	<para>
-	<@com.emptyLine/>
-		<emphasis role="bold">Reference</emphasis>
-		<?linebreak?>
 		<@literatureReferenceList study.DataSource.Reference/>
 	</para>
 </#macro>
+
 
 <#-- Variable to hold the list of Test Material Information documents in the order of appearance. A document should appear only once in this list -->
 <#assign testMaterialInformations = [] />
