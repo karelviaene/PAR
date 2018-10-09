@@ -75,7 +75,7 @@
 										<para>
 											Species: <@com.picklist study.MaterialsAndMethods.TestAnimals.Species/> 
 											<#if study.MaterialsAndMethods.TestAnimals.Strain?has_content>
-												(Strain: <@com.picklist study.MaterialsAndMethods.TestAnimals.Strain/>)
+												Strain: <@com.picklist study.MaterialsAndMethods.TestAnimals.Strain/>
 											</#if>
 										</para>
 
@@ -219,6 +219,11 @@
 										<para>
 										Doses: <@com.text study.MaterialsAndMethods.InVitroTestSystem.AmountConcentrationApplied/> 
 										</para>
+
+										<#if study.MaterialsAndMethods.InVitroTestSystem.Vehicle?has_content>
+											Vehicle: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.Vehicle/>
+										</#if>
+
 									</td>
 
 									<!-- Relevant information about the study -->
@@ -229,37 +234,37 @@
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.SourceSpecies?has_content>
-											(Source Species: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceSpecies/>)
+											Source Species: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceSpecies/>
 										</#if>
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.CellType?has_content>
-											(Cell type: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellType/>)
+											Cell type: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellType/>
 										</#if>
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.CellSource?has_content>
-											(Cell source: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellSource/>)
+											Cell source: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellSource/>
 										</#if>
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.SourceStrain?has_content>
-											(Source strain: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceStrain/>)
+											Source strain: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceStrain/>
 										</#if>
 										</para>
 
 										<para>
-										<#if study.MaterialsAndMethods.TestSystem.Vehicle?has_content>
-											(Exposure duration: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.DurationOfTreatmentExposure/>)
+										<#if study.MaterialsAndMethods.InVitroTestSystem.DurationOfTreatmentExposure?has_content>
+											Exposure duration: <@com.text study.MaterialsAndMethods.InVitroTestSystem.DurationOfTreatmentExposure/>
 										</#if>
 										</para>
 
 										<para>
-										<#if study.MaterialsAndMethods.TestSystem.Vehicle?has_content>
-											(Replicates: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.NumberOfReplicates/>)
+										<#if study.MaterialsAndMethods.InVitroTestSystem.NumberOfReplicates?has_content>
+											Replicates: <@com.text study.MaterialsAndMethods.InVitroTestSystem.NumberOfReplicates/>
 										</#if>
 										</para>
 

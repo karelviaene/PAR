@@ -95,7 +95,7 @@
 			<#if reference?has_content>
 				<#assign literatureReferences = com.addDocumentToSequenceAsUnique(reference, literatureReferences) />
 				<link  linkend="${reference.documentKey.uuid!}">
-					<@com.text reference.GeneralInfo.Author/> <#if reference.GeneralInfo.ReferenceYear?has_content>${reference.GeneralInfo.ReferenceYear?string["0"]}</#if> .
+					<@com.text reference.GeneralInfo.Author/> <#if reference.GeneralInfo.ReferenceYear?has_content>${reference.GeneralInfo.ReferenceYear?string["0"]}</#if>.
 					<@com.text reference.GeneralInfo.Name/> 
 				</link>
 				<?linebreak?>

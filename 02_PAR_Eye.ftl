@@ -136,10 +136,158 @@
 						</#list>
 				</tbody>
 			</table>
-
-
 		</#if>
 	
+		<!-- In Vitro -->
+		<#assign studyList2 = getSortedEyeIrritationInVitro(studyList) />
+		<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
+		<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList2/>
+
+		<!-- Study results -->
+		<#if !resultStudyList?has_content>
+			<@com.emptyLine/>
+			No relevant information available.
+			<#else/>
+				The results of in vitro studies on eye irritation are summarised in the following table:
+
+			<@com.emptyLine/>
+			<table border="1">
+				<title>Summary table of in vitro studies on eye irritation</title>
+				<col width="15%" />
+				<col width="15%" />
+				<col width="15%" />
+				<col width="25%" />
+				<col width="15%" />
+				<col width="15%" />
+				<tbody>
+					<tr>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Method, Guideline, GLP, Reliability</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Test substance, Doses</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Relevant information about the study</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Remarks</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
+					</tr>
+
+						<#list resultStudyList as study>
+
+						<#--TODO Could be possible improved with incorporating the condition in the previous call, i.e. populateResultAndDataWaivingAndTestingProposalStudyLists. It prints empty tables if none of the studies are Irrotation -->
+							<tr>
+								<!-- Method, Guideline, GLP, Reliability -->
+								<td>
+									<para>
+										<@com.picklist study.AdministrativeData.Endpoint />
+									</para>
+
+									<para>
+										GLP? <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
+									</para>
+
+									<para>
+										Reliability: <@com.picklist study.AdministrativeData.Reliability/>
+									</para>
+
+									<para>
+										Guideline: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
+									</para>
+
+									<para>
+										<@com.text study.MaterialsAndMethods.MethodNoGuideline/>
+									</para>
+									
+									<para>
+										Study type: <@com.picklist study.AdministrativeData.PurposeFlag/>
+									</para>
+								</td>
+								
+								<!-- Test substance, Doses -->
+								<td>
+									<para>
+										<@csr.studyTestMaterial study/>
+									</para>
+
+									<para>
+									Doses: <@com.text study.MaterialsAndMethods.TestSystem.AmountConcentrationApplied/> 
+									</para>
+
+									<para>
+									Vehicle: <@com.picklist study.MaterialsAndMethods.TestSystem.Vehicle/> 
+									</para>
+
+								</td>
+
+								<!-- Relevant information about the study -->
+								<td>
+									<para>
+									<#if study.MaterialsAndMethods.TestAnimals.Species?has_content>
+										Species: <@com.picklist study.MaterialsAndMethods.TestAnimals.Species/>
+									</#if>
+									</para>
+
+									<para>
+									<#if study.MaterialsAndMethods.TestAnimals.Strain?has_content>
+										Strain: <@com.picklist study.MaterialsAndMethods.TestAnimals.Strain/>
+									</#if>
+									</para>
+
+									<para>
+									<#if study.MaterialsAndMethods.TestAnimals.OrganismDetails?has_content>
+										Details: <@com.text study.MaterialsAndMethods.TestAnimals.OrganismDetails/>
+									</#if>
+									</para>
+
+									<para>
+									<#if study.MaterialsAndMethods.TestSystem.DurationOfTreatmentExposure?has_content>
+										Exposure duration: <@com.text study.MaterialsAndMethods.TestSystem.DurationOfTreatmentExposure/>
+									</#if>
+									</para>
+
+									<para>
+									<#if study.MaterialsAndMethods.TestSystem.DurationOfPostTreatmentIncubationInVitro?has_content>
+										Post-treatment: <@com.text study.MaterialsAndMethods.TestSystem.DurationOfPostTreatmentIncubationInVitro/>
+									</#if>
+									</para>
+
+									<para>
+									<#if study.MaterialsAndMethods.TestSystem.NumberOfAnimals?has_content>
+										Replicates: <@com.text study.MaterialsAndMethods.TestSystem.NumberOfAnimals/>
+									</#if>
+									</para>
+
+								</td>
+
+								<!-- Results -->
+								<td>
+									<para>
+										<@EyeIrritationInVitroList study.ResultsAndDiscussion.InVitro.ResultsOfExVivoInVitroStudy/>
+									</para>
+
+									<para>
+										<@com.richText study.ResultsAndDiscussion.InVitro.OtherEffectsAcceptanceOfResults/>
+									</para>
+								</td>
+
+								<!-- Remarks -->
+								<td>
+									<para>
+										<@com.richText study.OverallRemarksAttachments.RemarksOnResults/>
+									</para>
+								</td>
+
+								<!-- Reference -->
+								<td>
+									<para>
+										<@csr.studyReference study/>
+									</para>
+								</td>
+							</tr>
+							
+							<@csr.tableRowForJustificationForTypeOfInformation study/>
+						</#list>
+				</tbody>
+			</table>
+		</#if>
+
 
 	</section>
 
@@ -217,6 +365,23 @@
     <#return returnList />
 </#function>
 
+<#function getSortedEyeIrritationInVitro studyList>
+	<#if !(studyList?has_content)>
+		<#return []>
+	</#if>
+	<#local returnList = [] />
+	<#list studyList as study>
+		<#local endpoint = study.AdministrativeData.Endpoint />
+	<#local PurposeFlag = study.AdministrativeData.PurposeFlag />
+		<#if com.picklistValueMatchesPhrases(endpoint, ["eye irritation: in vitro / ex vivo","eye irritation, other"]) && PurposeFlag?has_content >
+			<#local returnList = returnList + [study] />
+		</#if>
+	</#list>
+	<#-- sort resultStudyList according to PurposeFlag -->
+	<#assign returnList = iuclid.sortByField(returnList, "AdministrativeData.PurposeFlag", ["key study","supporting study","weight of evidence","disregarded due to major methodological deficiencies","other information"]) />
+    <#return returnList />
+</#function>
+
 <#function getSortedSkinIrritationCorrosionInVivo studyList>
 	<#if !(studyList?has_content)>
 		<#return []>
@@ -274,7 +439,7 @@
 		<#list EyeIrritationInVitroRepeatableBlock as blockItem>
 			<#if blockItem.RunExperiment?has_content || blockItem.Value?has_content>
 				<para>
-				<@com.picklist blockItem.IrritationParameter/>
+				<@com.picklist blockItem.IrritationParameter/>:
 				</para>
 				<para role="indent">
 					<para>
@@ -283,7 +448,7 @@
 						</#if>
 						
 						<#if blockItem.Value?has_content>
-							value <@com.range blockItem.Value/>
+							value <@com.range blockItem.Value/>.
 						</#if>
 					</para>
 				</para>
