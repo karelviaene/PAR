@@ -1,20 +1,16 @@
 <!-- 5.3. Skin irritation/corrosion -->
 <@com.emptyLine/>
 <section>
-	<title role="HEAD-2">Irritation</title>
-
-	<!-- Skin -->
-	<section>
-		<title role="HEAD-3">Skin</title>
+	<title role="HEAD-2">Skin irritation/corrosion</title>
 
 		<!-- 5.3.1. Non-human information -->
 		<section>
-			<title role="HEAD-4">Non-human information</title>
+			<title role="HEAD-3">Non-human information</title>
 
 			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "SkinIrritationCorrosion") />
-			<#assign studyList1 = getSortedSkinIrritationCorrosionInVivo(studyList) />
 			
 			<!-- In Vivo -->
+			<#assign studyList1 = getSortedSkinIrritationCorrosionInVivo(studyList) />
 			<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
 			<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList1/>
 
@@ -299,14 +295,6 @@
 							</#list>
 					</tbody>
 				</table>
-
-				<#list resultStudyList as study>
-					<para>
-						Studies with results indicating corrosivity to the skin are summarised in section 5.4 Corrosivity.
-					</para>
-					<#break>
-				</#list>
-
 			</#if>
 
 
@@ -317,11 +305,6 @@
             <!-- <@csr.testingProposal testingProposalStudyList "Skin Irritation"/> -->
 
 		</section>
-
-
-
-	</section>
-
 
 </section>
 

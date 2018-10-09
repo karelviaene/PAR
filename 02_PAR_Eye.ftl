@@ -3,325 +3,145 @@
 <section>
 	<title role="HEAD-2">Eye irritation</title>
 
-	<!-- Skin -->
+	<!-- 5.3.1. Non-human information -->
 	<section>
-		<title role="HEAD-3">Skin</title>
+		<title role="HEAD-4">Non-human information</title>
+	    <#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "EyeIrritation") />
+		
+		<!-- In Vivo -->
+	    <#assign studyList1 = getSortedEyeIrritationInVivo(studyList) />
+		<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
+		<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList1/>
 
-		<!-- 5.3.1. Non-human information -->
-		<section>
-			<title role="HEAD-4">Non-human information</title>
+		<!-- Study results -->
+		<#if !resultStudyList?has_content>
+			No relevant information available.
+			<#else/>
+				The results of in vivo studies on eye irritation are summarised in the following table:
 
-			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "SkinIrritationCorrosion") />
-			<#assign studyList1 = getSortedSkinIrritationCorrosionInVivo(studyList) />
-			
-			<!-- In Vivo -->
-			<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
-			<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList1/>
+			<@com.emptyLine/>
+			<table border="1">
+				<title>Summary table of animal studies on eye irritation</title>
+				<col width="15%" />
+				<col width="15%" />
+				<col width="15%" />
+				<col width="25%" />
+				<col width="15%" />
+				<col width="15%" />
+				<tbody>
+					<tr>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Method, Guideline, GLP, Reliability</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Species, Strain, Sex, No/groups</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Test substance, Vehicle, Dose levels, Duration of exposure</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Remarks</emphasis></th>
+						<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
+					</tr>
 
-			<!-- Study results -->
-			<#if !resultStudyList?has_content>
-				No relevant information available.
-				<#else/>
-					The results of in vivo studies on skin irritation are summarised in the following table:
+						<#list resultStudyList as study>
 
-				<@com.emptyLine/>
-				<table border="1">
-					<title>Summary table of animal studies on skin corrosion/irritation</title>
-					<col width="15%" />
-					<col width="15%" />
-					<col width="15%" />
-					<col width="25%" />
-					<col width="15%" />
-					<col width="15%" />
-					<tbody>
-						<tr>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Method, Guideline, GLP, Reliability</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Species, Strain, Sex, No/groups</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Test substance, Vehicle, Dose levels, Duration of exposure</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Remarks</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
-						</tr>
+						<#--TODO Could be possible improved with incorporating the condition in the previous call, i.e. populateResultAndDataWaivingAndTestingProposalStudyLists. It prints empty tables if none of the studies are Irrotation -->
+							<tr>
+								<!-- Method, Guideline, GLP, Reliability -->
+								<td>
+									<para>
+										<@com.picklist study.AdministrativeData.Endpoint />
+									</para>
 
-							<#list resultStudyList as study>
+									<para>
+										GLP? <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
+									</para>
 
-							<#--TODO Could be possible improved with incorporating the condition in the previous call, i.e. populateResultAndDataWaivingAndTestingProposalStudyLists. It prints empty tables if none of the studies are Irrotation -->
-								<tr>
-									<!-- Method, Guideline, GLP, Reliability -->
-									<td>
-										<para>
-											<@com.picklist study.AdministrativeData.Endpoint />
-										</para>
+									<para>
+										Reliability: <@com.picklist study.AdministrativeData.Reliability/>
+									</para>
 
-										<para>
-											GLP? <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
-										</para>
+									<para>
+										Guideline: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
+									</para>
 
-										<para>
-											Reliability: <@com.picklist study.AdministrativeData.Reliability/>
-										</para>
+									<para>
+										<@com.text study.MaterialsAndMethods.MethodNoGuideline/>
+									</para>
 
-										<para>
-											Guideline: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
-										</para>
-
-										<para>
-											<@com.text study.MaterialsAndMethods.MethodNoGuideline/>
-										</para>
-
-										<para>
-											Study type: <@com.picklist study.AdministrativeData.PurposeFlag/>
-										</para>
-									</td>
-									
-									<!-- Species, Strain, Sex, No/groups -->
-									<td>
-										<para>
-											Species: <@com.picklist study.MaterialsAndMethods.TestAnimals.Species/> 
-											<#if study.MaterialsAndMethods.TestAnimals.Strain?has_content>
-												(Strain: <@com.picklist study.MaterialsAndMethods.TestAnimals.Strain/>)
-											</#if>
-										</para>
-
-										<para>
-											Number of animals: <@com.text study.MaterialsAndMethods.TestSystem.NumberOfAnimals/> 
-										</para>
-									</td>
-
-									<!-- Test substance, Vehicle, Dose levels, Duration of exposure -->
-									<td>
-										<para>
-											<@csr.studyTestMaterial study/>
-										</para>
-
-										<para>
-										Vehicle: <@com.picklist study.MaterialsAndMethods.TestSystem.Vehicle/> 
-										</para>
-
-										<para>
-										Dose: <@com.text study.MaterialsAndMethods.TestSystem.AmountConcentrationApplied/> 
-										</para>
-
-										<para>
-										Exposure duration: <@com.text study.MaterialsAndMethods.TestSystem.DurationOfTreatmentExposure/> 
-										</para>
-									</td>
-
-									<!-- Results -->
-									<td>
-										<para>
-											<@inVivoList study.ResultsAndDiscussion.InVivo.Results/>
-										</para>
-
-										<para>
-											<@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
-										</para>
-
-										<para>
-											<@com.text study.ResultsAndDiscussion.InVivo.OtherEffects/>
-										</para>
-									</td>
-
-									<!-- Remarks -->
-									<td>
-										<para>
-											<@com.richText study.OverallRemarksAttachments.RemarksOnResults/>
-										</para>
-									</td>
-
-									<!-- Reference -->
-									<td>
-										<para>
-											<@csr.studyReference study/>
-										</para>
-									</td>
-								</tr>
+									<para>
+										Study type: <@com.picklist study.AdministrativeData.PurposeFlag/>
+									</para>
+								</td>
 								
-								<@csr.tableRowForJustificationForTypeOfInformation study/>
-							</#list>
-					</tbody>
-				</table>
-
-				<#list resultStudyList as study>
-					<para>
-				<@com.emptyLine/>
-						Studies with results indicating corrosivity to the skin are summarised in section 5.4 Corrosivity.
-					</para>
-					<#break>
-				</#list>
-
-			</#if>
-
-			<!-- In Vitro -->
-			<#assign studyList2 = getSortedSkinIrritationCorrosionInVitro(studyList) />
-			<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
-			<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList2/>
-
-			<!-- Study results -->
-			<#if !resultStudyList?has_content>
-				<@com.emptyLine/>
-				No relevant information available.
-				<#else/>
-					The results of in vitro studies on skin irritation are summarised in the following table:
-
-				<@com.emptyLine/>
-				<table border="1">
-					<title>Summary table of in vitro studies on skin corrosion/irritation</title>
-					<col width="15%" />
-					<col width="15%" />
-					<col width="15%" />
-					<col width="25%" />
-					<col width="15%" />
-					<col width="15%" />
-					<tbody>
-						<tr>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Method, Guideline, GLP, Reliability</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Test substance, Doses</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Relevant information about the study</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Remarks</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
-						</tr>
-
-							<#list resultStudyList as study>
-
-							<#--TODO Could be possible improved with incorporating the condition in the previous call, i.e. populateResultAndDataWaivingAndTestingProposalStudyLists. It prints empty tables if none of the studies are Irrotation -->
-								<tr>
-									<!-- Method, Guideline, GLP, Reliability -->
-									<td>
-										<para>
-											<@com.picklist study.AdministrativeData.Endpoint />
-										</para>
-
-										<para>
-											GLP? <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
-										</para>
-
-										<para>
-											Reliability: <@com.picklist study.AdministrativeData.Reliability/>
-										</para>
-
-										<para>
-											Guideline: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
-										</para>
-
-										<para>
-											<@com.text study.MaterialsAndMethods.MethodNoGuideline/>
-										</para>
-										
-										<para>
-											Study type: <@com.picklist study.AdministrativeData.PurposeFlag/>
-										</para>
-									</td>
-									
-									<!-- Test substance, Doses -->
-									<td>
-										<para>
-											<@csr.studyTestMaterial study/>
-										</para>
-
-										<para>
-										Doses: <@com.text study.MaterialsAndMethods.InVitroTestSystem.AmountConcentrationApplied/> 
-										</para>
-									</td>
-
-									<!-- Relevant information about the study -->
-									<td>
-										<para>
-											Test system: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.TestSystem/> 
-										</para>
-
-										<para>
-										<#if study.MaterialsAndMethods.InVitroTestSystem.SourceSpecies?has_content>
-											(Source Species: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceSpecies/>)
+								<!-- Species, Strain, Sex, No/groups -->
+								<td>
+									<para>
+										Species: <@com.picklist study.MaterialsAndMethods.TestAnimals.Species/> 
+										<#if study.MaterialsAndMethods.TestAnimals.Strain?has_content>
+											(Strain: <@com.picklist study.MaterialsAndMethods.TestAnimals.Strain/>)
 										</#if>
-										</para>
+									</para>
 
-										<para>
-										<#if study.MaterialsAndMethods.InVitroTestSystem.CellType?has_content>
-											(Cell type: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellType/>)
-										</#if>
-										</para>
+									<para>
+										Number of animals: <@com.text study.MaterialsAndMethods.TestSystem.NumberOfAnimals/> 
+									</para>
+								</td>
 
-										<para>
-										<#if study.MaterialsAndMethods.InVitroTestSystem.CellSource?has_content>
-											(Cell source: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellSource/>)
-										</#if>
-										</para>
+								<!-- Test substance, Vehicle, Dose levels, Duration of exposure -->
+								<td>
+									<para>
+										<@csr.studyTestMaterial study/>
+									</para>
 
-										<para>
-										<#if study.MaterialsAndMethods.InVitroTestSystem.SourceStrain?has_content>
-											(Source strain: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceStrain/>)
-										</#if>
-										</para>
+									<para>
+									Vehicle: <@com.picklist study.MaterialsAndMethods.TestSystem.Vehicle/> 
+									</para>
 
-										<para>
-										<#if study.MaterialsAndMethods.TestSystem.Vehicle?has_content>
-											(Exposure duration: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.DurationOfTreatmentExposure/>)
-										</#if>
-										</para>
+									<para>
+									Dose: <@com.text study.MaterialsAndMethods.TestSystem.AmountConcentrationApplied/> 
+									</para>
 
-										<para>
-										<#if study.MaterialsAndMethods.TestSystem.Vehicle?has_content>
-											(Replicates: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.NumberOfReplicates/>)
-										</#if>
-										</para>
+									<para>
+									Exposure duration: <@com.text study.MaterialsAndMethods.TestSystem.DurationOfTreatmentExposure/> 
+									</para>
+								</td>
 
-									</td>
+								<!-- Results -->
+								<td>
+									<para>
+										<@inVivoList study.ResultsAndDiscussion.InVivo.IrritationCorrosionResults/>
+									</para>
 
-									<!-- Results -->
-									<td>
-										<para>
-											<@inVitroList study.ResultsAndDiscussion.InVitro.Results/>
-										</para>
+									<para>
+										<@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
+									</para>
 
-										<para>
-											<@com.text study.ResultsAndDiscussion.InVitro.OtherEffectsAcceptanceOfResults/>
-										</para>
-									</td>
+									<para>
+										<@com.text study.ResultsAndDiscussion.InVivo.OtherEffects/>
+									</para>
+								</td>
 
-									<!-- Remarks -->
-									<td>
-										<para>
-											<@com.richText study.OverallRemarksAttachments.RemarksOnResults/>
-										</para>
-									</td>
+								<!-- Remarks -->
+								<td>
+									<para>
+										<@com.richText study.OverallRemarksAttachments.RemarksOnResults/>
+									</para>
+								</td>
 
-									<!-- Reference -->
-									<td>
-										<para>
-											<@csr.studyReference study/>
-										</para>
-									</td>
-								</tr>
-								
-								<@csr.tableRowForJustificationForTypeOfInformation study/>
-							</#list>
-					</tbody>
-				</table>
-
-				<#list resultStudyList as study>
-					<para>
-						Studies with results indicating corrosivity to the skin are summarised in section 5.4 Corrosivity.
-					</para>
-					<#break>
-				</#list>
-
-			</#if>
+								<!-- Reference -->
+								<td>
+									<para>
+										<@csr.studyReference study/>
+									</para>
+								</td>
+							</tr>
+							
+							<@csr.tableRowForJustificationForTypeOfInformation study/>
+						</#list>
+				</tbody>
+			</table>
 
 
-            <!-- Data waiving -->
-            <!-- <@csr.dataWaiving dataWaivingStudyList "Skin Irritation"/> -->
-
-            <!-- Testing proposal -->
-            <!-- <@csr.testingProposal testingProposalStudyList "Skin Irritation"/> -->
-
-		</section>
-
-
+		</#if>
+	
 
 	</section>
-
 
 </section>
 
@@ -380,6 +200,23 @@
     <#return returnList />
 </#function>
 
+<#function getSortedEyeIrritationInVivo studyList>
+	<#if !(studyList?has_content)>
+		<#return []>
+	</#if>
+	<#local returnList = [] />
+	<#list studyList as study>
+		<#local endpoint = study.AdministrativeData.Endpoint />
+		<#local PurposeFlag = study.AdministrativeData.PurposeFlag />
+		<#if com.picklistValueMatchesPhrases(endpoint, ["eye irritation: in vivo"]) && PurposeFlag?has_content >
+			<#local returnList = returnList + [study] />
+		</#if>
+	</#list>
+	<#-- sort resultStudyList according to PurposeFlag -->
+	<#assign returnList = iuclid.sortByField(returnList, "AdministrativeData.PurposeFlag", ["key study","supporting study","weight of evidence","disregarded due to major methodological deficiencies","other information"]) />
+    <#return returnList />
+</#function>
+
 <#function getSortedSkinIrritationCorrosionInVivo studyList>
 	<#if !(studyList?has_content)>
 		<#return []>
@@ -387,7 +224,7 @@
 	<#local returnList = [] />
 	<#list studyList as study>
 		<#local endpoint = study.AdministrativeData.Endpoint />
-	<#local PurposeFlag = study.AdministrativeData.PurposeFlag />
+		<#local PurposeFlag = study.AdministrativeData.PurposeFlag />
 		<#if com.picklistValueMatchesPhrases(endpoint, ["skin irritation: in vivo"]) && PurposeFlag?has_content >
 			<#local returnList = returnList + [study] />
 		</#if>

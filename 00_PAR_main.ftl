@@ -41,12 +41,11 @@
 		<title role="HEAD-1">ASSESSMENT REPORT</title>
             <#include "02_PAR_phys_chem_properties.ftl" encoding="UTF-8" />
 
-			<@com.emptyLine/>		
+			<@com.emptyLine/>
             <#include "02_PAR_Skin.ftl" encoding="UTF-8" />
-			
+
 			<@com.emptyLine/>
             <#include "02_PAR_Eye.ftl" encoding="UTF-8" />
-			
 	</chapter>
 
 
