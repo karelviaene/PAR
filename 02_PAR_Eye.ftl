@@ -1,7 +1,7 @@
-<!-- 5.3. Skin irritation/corrosion -->
+<!-- 5.3. Eye irritation -->
 <@com.emptyLine/>
 <section>
-	<title role="HEAD-2">Irritation</title>
+	<title role="HEAD-2">Eye irritation</title>
 
 	<!-- Skin -->
 	<section>
