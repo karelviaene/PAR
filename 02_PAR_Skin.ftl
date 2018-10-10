@@ -94,7 +94,7 @@
 												Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
 											</#if>
 											<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
-												Confidential: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+												Concentration: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
 											</#if>
 										</para>
 
@@ -147,14 +147,6 @@
 							</#list>
 					</tbody>
 				</table>
-
-				<#list resultStudyList as study>
-					<para>
-				<@com.emptyLine/>
-						Studies with results indicating corrosivity to the skin are summarised in section 5.4 Corrosivity.
-					</para>
-					<#break>
-				</#list>
 
 			</#if>
 
@@ -230,7 +222,7 @@
 												Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
 											</#if>
 											<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
-												Confidential: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+												Concentration: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
 											</#if>
 										</para>
 
