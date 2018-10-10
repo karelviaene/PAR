@@ -86,7 +86,14 @@
 								<!-- Test substance, Vehicle, Dose levels, Duration of exposure -->
 								<td>
 									<para>
-										<@csr.studyTestMaterial study/>
+										<#if study.MaterialsAndMethods.TestMaterials.TestMaterialInformation?has_content>
+											<@csr.studyTestMaterial study/>
+										<#else>
+											Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
+										</#if>
+										<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
+											Confidential: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+										</#if>
 									</para>
 
 									<para>
@@ -107,9 +114,11 @@
 									<para>
 										<@inVivoList study.ResultsAndDiscussion.InVivo.IrritationCorrosionResults/>
 									</para>
-
+									
+									<@com.emptyLine/>
+									
 									<para>
-										<@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
+										Details: <@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
 									</para>
 
 									<para>
@@ -139,6 +148,7 @@
 		</#if>
 	
 		<!-- In Vitro -->
+		
 		<#assign studyList2 = getSortedEyeIrritationInVitro(studyList) />
 		<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
 		<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList2/>
@@ -203,7 +213,14 @@
 								<!-- Test substance, Doses -->
 								<td>
 									<para>
-										<@csr.studyTestMaterial study/>
+										<#if study.MaterialsAndMethods.TestMaterials.TestMaterialInformation?has_content>
+											<@csr.studyTestMaterial study/>
+										<#else>
+											Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
+										</#if>
+										<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
+											Confidential: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+										</#if>
 									</para>
 
 									<para>
@@ -262,8 +279,10 @@
 										<@EyeIrritationInVitroList study.ResultsAndDiscussion.InVitro.ResultsOfExVivoInVitroStudy/>
 									</para>
 
+									<@com.emptyLine/>
+									
 									<para>
-										<@com.richText study.ResultsAndDiscussion.InVitro.OtherEffectsAcceptanceOfResults/>
+										Details: <@com.richText study.ResultsAndDiscussion.InVitro.OtherEffectsAcceptanceOfResults/>
 									</para>
 								</td>
 

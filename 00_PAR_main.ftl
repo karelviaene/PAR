@@ -71,7 +71,7 @@
 		</#list>
 	</#if>
 	<#-- sort resultStudyList according to PurposeFlag -->
-	<#assign resultStudyList = iuclid.sortByField(resultStudyList, "AdministrativeData.PurposeFlag", ["key study","supporting study","weight of evidence","disregarded due to major methodological deficiencies","other information"]) />
+	<#-- <#assign resultStudyList = iuclid.sortByField(resultStudyList, "AdministrativeData.PurposeFlag", ["key study","supporting study","weight of evidence","disregarded due to major methodological deficiencies","other information"]) /> -->
 </#macro>
 
 <#function isRelevantAdequacyOfStudy study>

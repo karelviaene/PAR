@@ -10,6 +10,7 @@
 			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "SkinIrritationCorrosion") />
 			
 			<!-- In Vivo -->
+			
 			<#assign studyList1 = getSortedSkinIrritationCorrosionInVivo(studyList) />
 			<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
 			<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList1/>
@@ -87,19 +88,26 @@
 									<!-- Test substance, Vehicle, Dose levels, Duration of exposure -->
 									<td>
 										<para>
-											<@csr.studyTestMaterial study/>
+											<#if study.MaterialsAndMethods.TestMaterials.TestMaterialInformation?has_content>
+												<@csr.studyTestMaterial study/>
+											<#else>
+												Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
+											</#if>
+											<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
+												Confidential: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+											</#if>
 										</para>
 
 										<para>
-										Vehicle: <@com.picklist study.MaterialsAndMethods.TestSystem.Vehicle/> 
+											Vehicle: <@com.picklist study.MaterialsAndMethods.TestSystem.Vehicle/> 
 										</para>
 
 										<para>
-										Dose: <@com.text study.MaterialsAndMethods.TestSystem.AmountConcentrationApplied/> 
+											Dose: <@com.text study.MaterialsAndMethods.TestSystem.AmountConcentrationApplied/> 
 										</para>
 
 										<para>
-										Exposure duration: <@com.text study.MaterialsAndMethods.TestSystem.DurationOfTreatmentExposure/> 
+											Exposure duration: <@com.text study.MaterialsAndMethods.TestSystem.DurationOfTreatmentExposure/> 
 										</para>
 									</td>
 
@@ -108,9 +116,11 @@
 										<para>
 											<@inVivoList study.ResultsAndDiscussion.InVivo.Results/>
 										</para>
+										
+										<@com.emptyLine/>
 
 										<para>
-											<@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
+											Details: <@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
 										</para>
 
 										<para>
@@ -149,6 +159,7 @@
 			</#if>
 
 			<!-- In Vitro -->
+			
 			<#assign studyList2 = getSortedSkinIrritationCorrosionInVitro(studyList) />
 			<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
 			<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList2/>
@@ -213,11 +224,18 @@
 									<!-- Test substance, Doses -->
 									<td>
 										<para>
-											<@csr.studyTestMaterial study/>
+											<#if study.MaterialsAndMethods.TestMaterials.TestMaterialInformation?has_content>
+												<@csr.studyTestMaterial study/>
+											<#else>
+												Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
+											</#if>
+											<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
+												Confidential: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+											</#if>
 										</para>
 
 										<para>
-										Doses: <@com.text study.MaterialsAndMethods.InVitroTestSystem.AmountConcentrationApplied/> 
+											Doses: <@com.text study.MaterialsAndMethods.InVitroTestSystem.AmountConcentrationApplied/> 
 										</para>
 
 										<#if study.MaterialsAndMethods.InVitroTestSystem.Vehicle?has_content>
@@ -276,8 +294,10 @@
 											<@inVitroList study.ResultsAndDiscussion.InVitro.Results/>
 										</para>
 
+										<@com.emptyLine/>
+
 										<para>
-											<@com.text study.ResultsAndDiscussion.InVitro.OtherEffectsAcceptanceOfResults/>
+											Details: <@com.text study.ResultsAndDiscussion.InVitro.OtherEffectsAcceptanceOfResults/>
 										</para>
 									</td>
 
