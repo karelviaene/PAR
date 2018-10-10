@@ -17,15 +17,17 @@
 				<@com.emptyLine/>
 				<table border="1">
 					<title>Summary table of metal corrosivity studies</title>
-					<col width="25%" />
-					<col width="25%" />
-					<col width="25%" />
-					<col width="25%" />
+					<col width="20%" />
+					<col width="20%" />
+					<col width="20%" />
+					<col width="20%" />
+					<col width="20%" />
 					<tbody>
 						<tr>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Method, Guideline, GLP, Reliability</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Purity of test substance (%w/w)</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
+							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Conclusion</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
 						</tr>
 						
@@ -36,27 +38,23 @@
 								<!-- Method, Guideline, GLP, Reliability -->
 								<td>
 									<para>
-										<@com.picklist study.AdministrativeData.Endpoint />
+										<emphasis role="bold">GLP?</emphasis>  <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
 									</para>
 
 									<para>
-										GLP? <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
-									</para>
-
-									<para>
-										Reliability: <@com.picklist study.AdministrativeData.Reliability/>
+										<emphasis role="bold">Reliability</emphasis>:  <@com.picklist study.AdministrativeData.Reliability/>
 									</para>
 
 									<para>
 										<#if study.MaterialsAndMethods.Guideline?has_content>
-											Guideline: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
+											<emphasis role="bold">Guideline</emphasis>:  <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
 										<#else>
 											<@com.text study.MaterialsAndMethods.MethodNoGuideline/>
 										</#if>
 									</para>
 
 									<para>
-										Study type: <@com.picklist study.AdministrativeData.PurposeFlag/>
+										<emphasis role="bold">Study type</emphasis>: <@com.picklist study.AdministrativeData.PurposeFlag/>
 									</para>
 								</td>
 									
@@ -65,10 +63,10 @@
 									<#if study.MaterialsAndMethods.TestMaterials.TestMaterialInformation?has_content>
 										<@csr.studyTestMaterial study/>
 									<#else>
-										Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
+										<emphasis role="bold">Test Substance</emphasis>:  <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
 									</#if>
 									<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
-										Purity: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+										<emphasis role="bold">Purity</emphasis>:  <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
 									</#if>
 								</td>
 
@@ -76,6 +74,16 @@
 								<td>
 									<para>
 										<@ResultsList study.ResultsAndDiscussion.TestResults/>										
+									</para>
+								</td>
+
+								<!-- Conclusion -->
+								<td>
+									<para>
+										<emphasis role="bold">GHS</emphasis>: <@com.picklist study.ApplicantSummaryAndConclusion.InterpretationOfResults/> 									
+									</para>
+									<para>
+										<emphasis role="bold">Conclusion</emphasis>: <@com.richText study.ApplicantSummaryAndConclusion.Conclusions/> 									
 									</para>
 								</td>
 
@@ -116,12 +124,13 @@
 		<#local sortedList = iuclid.sortByField(ResultRepeatableBlock, "Type of material", ["aluminium","carbon steel","other:"]) />
 
 		<#local currentHeader><@com.picklist sortedList[0].TypeOfMaterial/></#local>
-		<para>Type of material: ${currentHeader}</para>
+		<para><emphasis role="bold">Type of material</emphasis>: ${currentHeader}</para>
 		
 		<#list sortedList as blockItem>
 			<#local parameter><@com.picklist blockItem.TypeOfMaterial/></#local>
 			<#if !(currentHeader == parameter)>
 				<#local currentHeader = parameter/>
+				<@com.emptyLine/>
 				<para>${currentHeader}</para>
 			</#if>
 			<para role="indent">

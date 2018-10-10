@@ -24,12 +24,13 @@
 				<@com.emptyLine/>
 				<table border="1">
 					<title>Summary table of animal studies on skin corrosion/irritation</title>
+					<col width="10%" />
+					<col width="20%" />
+					<col width="20%" />
 					<col width="15%" />
+					<col width="10%" />
 					<col width="15%" />
-					<col width="15%" />
-					<col width="25%" />
-					<col width="15%" />
-					<col width="15%" />
+					<col width="10%" />
 					<tbody>
 						<tr>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Method, Guideline, GLP, Reliability</emphasis></th>
@@ -37,6 +38,7 @@
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Test substance, Vehicle, Dose levels, Duration of exposure</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Remarks</emphasis></th>
+							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Conclusion</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
 						</tr>
 
@@ -51,15 +53,15 @@
 										</para>
 
 										<para>
-											GLP? <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
+											<emphasis role="bold">GLP?</emphasis> <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
 										</para>
 
 										<para>
-											Reliability: <@com.picklist study.AdministrativeData.Reliability/>
+											<emphasis role="bold">Reliability</emphasis>: <@com.picklist study.AdministrativeData.Reliability/>
 										</para>
 
 										<para>
-											Guideline: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
+											<emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
 										</para>
 
 										<para>
@@ -67,21 +69,21 @@
 										</para>
 
 										<para>
-											Study type: <@com.picklist study.AdministrativeData.PurposeFlag/>
+											<emphasis role="bold">Study type</emphasis>: <@com.picklist study.AdministrativeData.PurposeFlag/>
 										</para>
 									</td>
 									
 									<!-- Species, Strain, Sex, No/groups -->
 									<td>
 										<para>
-											Species: <@com.picklist study.MaterialsAndMethods.TestAnimals.Species/> 
+											<emphasis role="bold">Species</emphasis>: <@com.picklist study.MaterialsAndMethods.TestAnimals.Species/> 
 											<#if study.MaterialsAndMethods.TestAnimals.Strain?has_content>
-												Strain: <@com.picklist study.MaterialsAndMethods.TestAnimals.Strain/>
+												<emphasis role="bold">Strain</emphasis>: <@com.picklist study.MaterialsAndMethods.TestAnimals.Strain/>
 											</#if>
 										</para>
 
 										<para>
-											Number of animals: <@com.text study.MaterialsAndMethods.TestSystem.NumberOfAnimals/> 
+											<emphasis role="bold">Number of animals</emphasis>: <@com.text study.MaterialsAndMethods.TestSystem.NumberOfAnimals/> 
 										</para>
 									</td>
 
@@ -91,23 +93,23 @@
 											<#if study.MaterialsAndMethods.TestMaterials.TestMaterialInformation?has_content>
 												<@csr.studyTestMaterial study/>
 											<#else>
-												Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
+												<emphasis role="bold">Test substance</emphasis>: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
 											</#if>
 											<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
-												Concentration: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+												<emphasis role="bold">Concentration</emphasis>: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
 											</#if>
 										</para>
 
 										<para>
-											Vehicle: <@com.picklist study.MaterialsAndMethods.TestSystem.Vehicle/> 
+											<emphasis role="bold">Vehicle</emphasis>: <@com.picklist study.MaterialsAndMethods.TestSystem.Vehicle/> 
 										</para>
 
 										<para>
-											Dose: <@com.text study.MaterialsAndMethods.TestSystem.AmountConcentrationApplied/> 
+											<emphasis role="bold">Dose</emphasis>: <@com.text study.MaterialsAndMethods.TestSystem.AmountConcentrationApplied/> 
 										</para>
 
 										<para>
-											Exposure duration: <@com.text study.MaterialsAndMethods.TestSystem.DurationOfTreatmentExposure/> 
+											<emphasis role="bold">Exposure duration</emphasis>: <@com.text study.MaterialsAndMethods.TestSystem.DurationOfTreatmentExposure/> 
 										</para>
 									</td>
 
@@ -120,7 +122,7 @@
 										<@com.emptyLine/>
 
 										<para>
-											Details: <@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
+											<emphasis role="bold">Details</emphasis>: <@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
 										</para>
 
 										<para>
@@ -132,6 +134,16 @@
 									<td>
 										<para>
 											<@com.richText study.OverallRemarksAttachments.RemarksOnResults/>
+										</para>
+									</td>
+
+									<!-- Conclusion -->
+									<td>
+										<para>
+											<emphasis role="bold">GHS</emphasis>: <@com.picklist study.ApplicantSummaryAndConclusion.InterpretationOfResults/> 									
+										</para>
+										<para>
+											<emphasis role="bold">Conclusion</emphasis>: <@com.richText study.ApplicantSummaryAndConclusion.Conclusions/> 									
 										</para>
 									</td>
 
@@ -166,12 +178,13 @@
 				<@com.emptyLine/>
 				<table border="1">
 					<title>Summary table of in vitro studies on skin corrosion/irritation</title>
+					<col width="10%" />
+					<col width="20%" />
+					<col width="20%" />
 					<col width="15%" />
+					<col width="10%" />
 					<col width="15%" />
-					<col width="15%" />
-					<col width="25%" />
-					<col width="15%" />
-					<col width="15%" />
+					<col width="10%" />
 					<tbody>
 						<tr>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Method, Guideline, GLP, Reliability</emphasis></th>
@@ -179,6 +192,7 @@
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Relevant information about the study</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Remarks</emphasis></th>
+							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Conclusion</emphasis></th>
 							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
 						</tr>
 
@@ -193,15 +207,15 @@
 										</para>
 
 										<para>
-											GLP? <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
+											<emphasis role="bold">GLP?</emphasis> <@com.picklist study.MaterialsAndMethods.GLPComplianceStatement/>
 										</para>
 
 										<para>
-											Reliability: <@com.picklist study.AdministrativeData.Reliability/>
+											<emphasis role="bold">Reliability</emphasis>: <@com.picklist study.AdministrativeData.Reliability/>
 										</para>
 
 										<para>
-											Guideline: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
+											<emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
 										</para>
 
 										<para>
@@ -209,7 +223,7 @@
 										</para>
 										
 										<para>
-											Study type: <@com.picklist study.AdministrativeData.PurposeFlag/>
+											<emphasis role="bold">Study type</emphasis>: <@com.picklist study.AdministrativeData.PurposeFlag/>
 										</para>
 									</td>
 									
@@ -219,19 +233,19 @@
 											<#if study.MaterialsAndMethods.TestMaterials.TestMaterialInformation?has_content>
 												<@csr.studyTestMaterial study/>
 											<#else>
-												Test substance: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
+												<emphasis role="bold">Test substance</emphasis>: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/> 
 											</#if>
 											<#if study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential?has_content>
-												Concentration: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
+												<emphasis role="bold">Concentration</emphasis>: <@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudyConfidential/> 
 											</#if>
 										</para>
 
 										<para>
-											Doses: <@com.text study.MaterialsAndMethods.InVitroTestSystem.AmountConcentrationApplied/> 
+											<emphasis role="bold">Doses</emphasis>: <@com.text study.MaterialsAndMethods.InVitroTestSystem.AmountConcentrationApplied/> 
 										</para>
 
 										<#if study.MaterialsAndMethods.InVitroTestSystem.Vehicle?has_content>
-											Vehicle: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.Vehicle/>
+											<emphasis role="bold">Vehicle</emphasis>: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.Vehicle/>
 										</#if>
 
 									</td>
@@ -239,42 +253,42 @@
 									<!-- Relevant information about the study -->
 									<td>
 										<para>
-											Test system: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.TestSystem/> 
+											<emphasis role="bold">Test system</emphasis>: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.TestSystem/> 
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.SourceSpecies?has_content>
-											Source Species: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceSpecies/>
+											<emphasis role="bold">Source species</emphasis>: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceSpecies/>
 										</#if>
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.CellType?has_content>
-											Cell type: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellType/>
+											<emphasis role="bold">Cell type</emphasis>: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellType/>
 										</#if>
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.CellSource?has_content>
-											Cell source: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellSource/>
+											<emphasis role="bold">Cell source</emphasis>: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.CellSource/>
 										</#if>
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.SourceStrain?has_content>
-											Source strain: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceStrain/>
+											<emphasis role="bold">Source strain</emphasis>: <@com.picklist study.MaterialsAndMethods.InVitroTestSystem.SourceStrain/>
 										</#if>
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.DurationOfTreatmentExposure?has_content>
-											Exposure duration: <@com.text study.MaterialsAndMethods.InVitroTestSystem.DurationOfTreatmentExposure/>
+											<emphasis role="bold">Exposure duration</emphasis>: <@com.text study.MaterialsAndMethods.InVitroTestSystem.DurationOfTreatmentExposure/>
 										</#if>
 										</para>
 
 										<para>
 										<#if study.MaterialsAndMethods.InVitroTestSystem.NumberOfReplicates?has_content>
-											Replicates: <@com.text study.MaterialsAndMethods.InVitroTestSystem.NumberOfReplicates/>
+											<emphasis role="bold">Replicates</emphasis>: <@com.text study.MaterialsAndMethods.InVitroTestSystem.NumberOfReplicates/>
 										</#if>
 										</para>
 
@@ -289,7 +303,7 @@
 										<@com.emptyLine/>
 
 										<para>
-											Details: <@com.text study.ResultsAndDiscussion.InVitro.OtherEffectsAcceptanceOfResults/>
+											<emphasis role="bold">Details</emphasis>: <@com.text study.ResultsAndDiscussion.InVitro.OtherEffectsAcceptanceOfResults/>
 										</para>
 									</td>
 
@@ -297,6 +311,16 @@
 									<td>
 										<para>
 											<@com.richText study.OverallRemarksAttachments.RemarksOnResults/>
+										</para>
+									</td>
+
+									<!-- Conclusion -->
+									<td>
+										<para>
+											<emphasis role="bold">GHS</emphasis>: <@com.picklist study.ApplicantSummaryAndConclusion.InterpretationOfResults/> 									
+										</para>
+										<para>
+											<emphasis role="bold">Conclusion</emphasis>: <@com.richText study.ApplicantSummaryAndConclusion.Conclusions/> 									
 										</para>
 									</td>
 
@@ -846,13 +870,14 @@
 		<#local sortedList = iuclid.sortByField(inVitroRepeatableBlock, "IrritationCorrosionParameter", ["% tissue viability","transcutaneous electrical resistance (in kΩ)","dye content (µg/disc)","penetration time (in minutes)"]) />
 
 		<#local currentHeader><@com.picklist sortedList[0].IrritationCorrosionParameter/></#local>
-		<para>${currentHeader}</para>
+		<para><emphasis role="bold">${currentHeader}</emphasis>:</para>
 
 		<#list sortedList as blockItem>
 			<#local parameter><@com.picklist blockItem.IrritationCorrosionParameter/></#local>
 			<#if !(currentHeader == parameter)>
 				<#local currentHeader = parameter/>
-				<para>${currentHeader}</para>
+				<@com.emptyLine/>
+				<para><emphasis role="bold">${currentHeader}</emphasis>:</para>
 			</#if>
 			<para role="indent">
 				<#if blockItem.RunExperiment?has_content>
@@ -876,13 +901,14 @@
 		<#local sortedList = iuclid.sortByField(inVivoRepeatableBlock, "Parameter", ["overall irritation score","primary dermal irritation index (PDII)","erythema score","edema score"]) />
 
 		<#local currentHeader><@com.picklist sortedList[0].Parameter/></#local>
-		<para>${currentHeader}</para>
+		<para><emphasis role="bold">${currentHeader}</emphasis>:</para>
 
 		<#list sortedList as blockItem>
 			<#local parameter><@com.picklist blockItem.Parameter/></#local>
 			<#if !(currentHeader == parameter)>
 				<#local currentHeader = parameter/>
-				<para>${currentHeader}</para>
+				<@com.emptyLine/>
+				<para><emphasis role="bold">${currentHeader}</emphasis>:</para>
 			</#if>
 			<para role="indent">
 				<@com.range blockItem.Score/> 
