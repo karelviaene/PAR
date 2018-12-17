@@ -507,17 +507,12 @@
 						Specific concentration limits, M factor
 					</td>
 					<td>
-						<para> Specific concentration limit: NOT WORKING YET  </para>
-					
-						M-Factor acute: 
+											
 						<#if record.Classification.EnvironmentalHazards.AquaticEnvironment.MFactor.MFactorAcute?has_content> 
-							<@com.number record.Classification.EnvironmentalHazards.AquaticEnvironment.MFactor.MFactorAcute/>
-						<#else/> <para> / </para>
-						</#if>
-						M-Factor chronic: 
+							M-Factor acute:  <@com.number record.Classification.EnvironmentalHazards.AquaticEnvironment.MFactor.MFactorAcute/>
+						</#if>						
 						<#if record.Classification.EnvironmentalHazards.AquaticEnvironment.MFactor.MFactorChronic?has_content> 
-							<@com.number record.Classification.EnvironmentalHazards.AquaticEnvironment.MFactor.MFactorChronic/>
-						<#else/> <para> / </para>
+							M-Factor chronic: <@com.number record.Classification.EnvironmentalHazards.AquaticEnvironment.MFactor.MFactorChronic/>
 						</#if>
 					</td>
 				</tr>				
