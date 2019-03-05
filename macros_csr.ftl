@@ -1,7 +1,6 @@
 ﻿<!-- Reusable macros and functions in templates representing sub-chapters of CSR document -->
 
 <#-- Macros regarding substance name -->
-
 <#macro substanceName substance>
 <#compress>
 	<#if substance.ReferenceSubstance.ReferenceSubstance?has_content> 
@@ -39,29 +38,33 @@
   	</#if>
 </#compress>
 </#macro>
-
++
 
 <#-- Macros to print study results column -->
 
 <#macro studyRemarksColumn study>
 	<para>
-		<@com.text study.ResultsAndDiscussion.InVivo.IrritationCorrosionResponseData/>
+		<@com.picklist study.AdministrativeData.Reliability/>
 	</para>
-</#macro>
-
-<#macro studyTestMaterial study>
 	<para>
-		Test material: <@testMaterialInformation study.MaterialsAndMethods.TestMaterials.TestMaterialInformation/>
+		<@com.picklist study.AdministrativeData.PurposeFlag/>
 	</para>
-</#macro>
-
-
-<#macro studyReference study>
 	<para>
+		<@com.picklist study.AdministrativeData.StudyResultType/>
+	</para>
+	<para>
+	<@com.emptyLine/>
+		<emphasis role="bold">Test material</emphasis>
+		<?linebreak?>
+		<@testMaterialInformation study.MaterialsAndMethods.TestMaterials.TestMaterialInformation/>
+	</para>
+	<para>
+	<@com.emptyLine/>
+		<emphasis role="bold">Reference</emphasis>
+		<?linebreak?>
 		<@literatureReferenceList study.DataSource.Reference/>
 	</para>
 </#macro>
-
 
 <#-- Variable to hold the list of Test Material Information documents in the order of appearance. A document should appear only once in this list -->
 <#assign testMaterialInformations = [] />
@@ -76,7 +79,8 @@
 			<#if testMaterial.Composition.OtherCharacteristics.TestMaterialForm?has_content>
 			<?linebreak?>
 			Form: <@com.picklist testMaterial.Composition.OtherCharacteristics.TestMaterialForm/>
-			</#if> (full information in <link linkend="${testMaterial.documentKey.uuid!}">Appendix</link>).
+			</#if> (full information in <command linkend="${testMaterial.documentKey.uuid!}">
+			Annex II</command>).
 		</#if>
 	<#else>
 		Information not available in IUCLID
@@ -94,15 +98,20 @@
 			<#local reference = iuclid.getDocumentForKey(item) />
 			<#if reference?has_content>
 				<#assign literatureReferences = com.addDocumentToSequenceAsUnique(reference, literatureReferences) />
-				<link  linkend="${reference.documentKey.uuid!}">
-					<@com.text reference.GeneralInfo.Author/> <#if reference.GeneralInfo.ReferenceYear?has_content>${reference.GeneralInfo.ReferenceYear?string["0"]}</#if>.
-					<@com.text reference.GeneralInfo.Name/> 
-				</link>
+				<command linkend="${reference.documentKey.uuid!}">
+					<@com.text reference.GeneralInfo.Author/> <#if reference.GeneralInfo.ReferenceYear?has_content>${reference.GeneralInfo.ReferenceYear?string["0"]}</#if>
+				</command>
 				<?linebreak?>
 			</#if>
 		</#list>
 	</#if>
 </#compress>
+</#macro>
+
+<#macro studyReference study>
+	<para>
+		<@literatureReferenceList study.DataSource.Reference/>
+	</para>
 </#macro>
 
 <#-- Variables for hyperlinking/populating Annex III -->
@@ -111,7 +120,7 @@
 <#macro modeOfActionOtherReproductiveTox summary>
 <#compress>	
 	<#assign modeOfActionsOthersReproductiveTox = modeOfActionsOthersReproductiveTox + [summary] />
-		<link linkend="${summary.documentKey.uuid!}"><citetitle>Detailed information on the Mode of Action is available in Annex III:</citetitle></link>
+		<para>Detailed information on the Mode of Action is available in <command linkend="${summary.documentKey.uuid!}">Annex III.</command></para>
 </#compress>
 </#macro>
 
@@ -119,7 +128,7 @@
 <#macro modeOfActionRepeatedDoseToxicity summary>
 <#compress>
 	<#assign modeOfActionRepeatedDosesToxicity = modeOfActionRepeatedDosesToxicity + [summary] />
-		<link linkend="${summary.documentKey.uuid!}"><citetitle>Detailed information on the Mode of Action is available in Annex III:</citetitle></link>
+		<para>Detailed information on the Mode of Action is available in <command linkend="${summary.documentKey.uuid!}">Annex III.</command></para>
 </#compress>
 </#macro>
 
@@ -127,7 +136,7 @@
 <#macro modeOfActionOtherGenetic summary>
 <#compress>
 	<#assign modeOfActionsOthersGenetic = modeOfActionsOthersGenetic + [summary]/>
-		<link linkend="${summary.documentKey.uuid!}"><citetitle>Detailed information on the Mode of Action is available in Annex III:</citetitle></link>
+		<para>Detailed information on the Mode of Action is available in <command linkend="${summary.documentKey.uuid!}">Annex III.</command></para>
 </#compress>
 </#macro>
 
@@ -135,7 +144,7 @@
 <#macro modeOfActionOtherCarcinogenicity summary>
 <#compress>
 	<#assign modeOfActionsOthersCarcinogenicity = modeOfActionsOthersCarcinogenicity + [summary]/>
-		<link linkend="${summary.documentKey.uuid!}"><citetitle>Detailed information on the Mode of Action is available in Annex III:</citetitle></link>
+		<para>Detailed information on the Mode of Action is available in <command linkend="${summary.documentKey.uuid!}">Annex III.</command></para>
 </#compress>
 </#macro>
 
@@ -162,7 +171,8 @@
 			<para>
 				<emphasis role="bold">Assessment entity linked:</emphasis>
 				<#list aeList as ae>
-					<@com.text ae.AssessmentEntityName/>
+					<para><emphasis role="bold"><@com.text ae.AssessmentEntityName/></emphasis>. 
+					View the assessment entity table in chapter 1.3 <command linkend="${ae.documentKey.uuid!}">here</command></para>
 					<#if ae_has_next>; </#if>
 				</#list>
 			</para>
