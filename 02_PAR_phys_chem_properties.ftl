@@ -8,6 +8,87 @@
     <#assign propertyToDataMap = {
         "Physical state at 20 °C and 101.3 kPa" :
             {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Colour at 20 °C and 101.3 kPa" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Odour at 20 °C and 101.3 kPa" :
+            {"subType" : "GeneralInformation",
+            "listValueTextPath" : "ResultsAndDiscussion.SubstanceType"},
+        "Acidity / alkalinity" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Relative density / bulk density" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Storage stability test - accelerated storage" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Storage stability test – long term storage at ambient temperature" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Storage stability test – low temperature stability test for liquids" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Effects on content of the active substance and technical characteristics of the biocidal product - light" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Effects on content of the active substance and technical characteristics of the biocidal product – temperature and humidity" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Effects on content of the active substance and technical characteristics of the biocidal product - reactivity towards container material" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Wettability" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Suspensibility, spontaneity and dispersion stability" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Wet sieve analysis and dry sieve test" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Emulsifiability, re-emulsifiability and emulsion stability" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Disintegration time" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Particle size distribution, content of dust/fines, attrition, friability" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Persistent foaming" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Flowability/Pourability/Dustability" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Burning rate — smoke generators" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Burning completeness — smoke generators" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Composition of smoke — smoke generators" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Spraying pattern — aerosols" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Physical compatibility" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Chemical compatibility" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Degree of dissolution and dilution stability" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Surface tension" :
+            {"subType" : "GeneralInformation",
+            "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"},
+        "Viscosity" :
+            {"subType" : "GeneralInformation",
             "listValuePath" : "ResultsAndDiscussion.SubstancePhysicalState"}
     }/>
 
@@ -72,6 +153,98 @@
 </section>
 
 
+<@com.emptyLine/>
+<section>
+	<title role="HEAD-2">Phys Chem</title>
+			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "Ph") />
+			
+			<!-- Acidity / alkalinity -->
+			
+			<#assign studyList2 = getSortedAcidity(studyList) />
+			<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
+			<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList2/>
+
+			<!-- Study results -->
+			<#if !resultStudyList?has_content>
+				<@com.emptyLine/>
+				No relevant information available.
+				<#else/>
+					The results of acidity studies are summarised in the following table:
+
+				<@com.emptyLine/>
+				
+				<table border="1">
+					<title>Summary table of animal studies on skin corrosion/irritation</title>
+					<col width="20%" />
+					<col width="20%" />
+					<col width="10%" />
+					<col width="30%" />
+					<col width="20%" />
+					<tbody>
+						<tr>
+							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Property</emphasis></th>
+							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Guideline and Method</emphasis></th>
+							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Purity of the test substance (%w/w)</emphasis></th>
+							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
+							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
+						</tr>
+						<#list resultStudyList as study>
+						<tr>
+							<!-- Endpoint / Property -->
+							<td>
+								<para>
+									<@com.picklist study.AdministrativeData.Endpoint />
+								</para>
+							</td>
+
+							<!-- Guideline, Method -->
+							<td>
+								<para>
+									<emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
+								</para>
+
+								<para>
+									<@com.text study.MaterialsAndMethods.MethodNoGuideline/>
+								</para>
+							</td>
+
+							<!-- Purity Test substance -->
+							<td>								
+								<para>
+								<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
+									Pure product tested
+								<#else>
+									<@com.text MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
+								</#if>
+								</para>
+							</td>
+							
+							<!-- Results -->
+							<td>
+								<para>
+									<@ResultList study.ResultsAndDiscussion.phValue/>
+								</para>
+								
+								<@com.emptyLine/>
+							</td>
+							
+							<!-- Reference -->
+							<td>
+								<para>
+									<@csr.studyReference study/>
+								</para>
+							</td>
+							
+
+						</tr>
+						</#list>
+					</tbody>
+				</table>
+				
+			</#if>
+</section>
+
+
 <!-- Macros and functions -->
 <#function isOriginElement substance>
 <#if !(substance?has_content)>
@@ -82,6 +255,41 @@
 </#if>
 <#return false>
 </#function>
+
+<#function getSortedAcidity studyList>
+	<#if !(studyList?has_content)>
+		<#return []>
+	</#if>
+	<#local returnList = [] />
+	<#list studyList as study>
+		<#local endpoint = study.AdministrativeData.Endpoint />
+	<#local PurposeFlag = study.AdministrativeData.PurposeFlag />
+		<#if com.picklistValueMatchesPhrases(endpoint, ["pH","acidity, alkalinity"]) && PurposeFlag?has_content >
+			<#local returnList = returnList + [study] />
+		</#if>
+	</#list>
+	<#-- sort resultStudyList according to PurposeFlag -->
+	<#assign returnList = iuclid.sortByField(returnList, "AdministrativeData.PurposeFlag", ["key study","supporting study","weight of evidence","disregarded due to major methodological deficiencies","other information"]) />
+    <#return returnList />
+</#function>
+
+<#macro ResultList Allresults>
+<#compress>
+	<#if Allresults?has_content>
+
+		<#list Allresults as blockItem>
+			<para>
+				<#if blockItem.Value?has_content>
+					Value: <@com.range blockItem.Value/>
+				</#if>
+				<#if blockItem.RemarksOnResults?has_content>
+					(<@com.picklist blockItem.RemarksOnResults/>)
+				</#if>
+			</para>
+		</#list>
+  	</#if>
+</#compress>
+</#macro>
 
 <#function isTypeOfSubstanceOther substance>
 <#if !(substance?has_content)>
@@ -262,6 +470,12 @@
 		</#if>
 	</#if>
 	
+	<#-- listValueTextPath -->
+	<#if propertyData["listValueTextPath"]?has_content>
+		<#local valuePath = "summary." + propertyData["listValueTextPath"] />
+		<@com.picklist valuePath?eval />
+	</#if>
+
 	<#-- atValuePath -->
 	<#if propertyData["atValuePath"]?has_content>
 		<#local valuePath = "summary." + propertyData["atValuePath"] />
