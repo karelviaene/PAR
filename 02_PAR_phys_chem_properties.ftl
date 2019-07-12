@@ -156,10 +156,69 @@
 <@com.emptyLine/>
 <section>
 	<title role="HEAD-2">Phys Chem</title>
+
+	<table border="1">
+		<title>Summary table of animal studies on skin corrosion/irritation</title>
+		<col width="20%" />
+		<col width="20%" />
+		<col width="10%" />
+		<col width="30%" />
+		<col width="20%" />
+		<tbody>
+			<tr>
+				<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Property</emphasis></th>
+				<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Guideline and Method</emphasis></th>
+				<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Purity of the test substance (%w/w)</emphasis></th>
+				<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
+				<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
+			</tr>
+						
+			<!-- PHYSICAL STATE -->
+		
+			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "GeneralInformation") />
+
+			<!-- Study results -->
+			<#if !studyList?has_content>
+				<@com.emptyLine/>
+				No relevant information available.
+			<#else/>
+				<#list studyList as study>
+					<tr>
+						<!-- Endpoint / Property -->
+						<td>
+							<emphasis role="bold">Physical State</emphasis>
+						</td>
+						<!-- Guideline, Method -->
+						<td>
+							<para> <emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/> </para>
+							<para> <@com.text study.MaterialsAndMethods.MethodNoGuideline/> </para>
+						</td>
+						<!-- Purity Test substance -->
+						<td>								
+							<para>
+							<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
+								Pure product tested
+							<#else>
+								<@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
+							</#if>
+							</para>
+						</td>							
+						<!-- Results -->
+						<td>
+							<para> <@com.picklist study.ResultsAndDiscussion.SubstancePhysicalState/> </para>
+						</td>							
+						<!-- Reference -->
+						<td>
+							<para>  <@csr.studyReference study/> </para>
+						</td>
+					</tr>
+				</#list>
+				</#if>
+							
+
+			<!-- ACIDITY / ALKALINITY -->
+			
 			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "Ph") />
-			
-			<!-- Acidity / alkalinity -->
-			
 			<#assign studyList2 = getSortedAcidity(studyList) />
 			<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
 			<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList2/>
@@ -168,80 +227,91 @@
 			<#if !resultStudyList?has_content>
 				<@com.emptyLine/>
 				No relevant information available.
-				<#else/>
-					The results of acidity studies are summarised in the following table:
-
-				<@com.emptyLine/>
-				
-				<table border="1">
-					<title>Summary table of animal studies on skin corrosion/irritation</title>
-					<col width="20%" />
-					<col width="20%" />
-					<col width="10%" />
-					<col width="30%" />
-					<col width="20%" />
-					<tbody>
-						<tr>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Property</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Guideline and Method</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Purity of the test substance (%w/w)</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Results</emphasis></th>
-							<th><?dbfo bgcolor="#FBDDA6" ?><emphasis role="bold">Reference</emphasis></th>
-						</tr>
-						<#list resultStudyList as study>
-						<tr>
-							<!-- Endpoint / Property -->
-							<td>
-								<para>
-									<@com.picklist study.AdministrativeData.Endpoint />
-								</para>
-							</td>
-
-							<!-- Guideline, Method -->
-							<td>
-								<para>
-									<emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/>
-								</para>
-
-								<para>
-									<@com.text study.MaterialsAndMethods.MethodNoGuideline/>
-								</para>
-							</td>
-
-							<!-- Purity Test substance -->
-							<td>								
-								<para>
-								<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
-									Pure product tested
-								<#else>
-									<@com.text MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
-								</#if>
-								</para>
-							</td>
-							
-							<!-- Results -->
-							<td>
-								<para>
-									<@ResultList study.ResultsAndDiscussion.phValue/>
-								</para>
-								
-								<@com.emptyLine/>
-							</td>
-							
-							<!-- Reference -->
-							<td>
-								<para>
-									<@csr.studyReference study/>
-								</para>
-							</td>
-							
-
-						</tr>
-						</#list>
-					</tbody>
-				</table>
-				
+			<#else/>
+				<#list resultStudyList as study>
+					<tr>
+						<!-- Endpoint / Property -->
+						<td>
+							<emphasis role="bold">Acidity / alkalinity</emphasis>
+							<para> <@com.picklist study.AdministrativeData.Endpoint /> </para>
+						</td>
+						<!-- Guideline, Method -->
+						<td>
+							<para> <emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/> </para>
+							<para> <@com.text study.MaterialsAndMethods.MethodNoGuideline/> </para>
+						</td>
+						<!-- Purity Test substance -->
+						<td>								
+							<para>
+							<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
+								Pure product tested
+							<#else>
+								<@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
+							</#if>
+							</para>
+						</td>							
+						<!-- Results -->
+						<td>
+							<para> <@ResultList study.ResultsAndDiscussion.phValue/> </para>
+						</td>							
+						<!-- Reference -->
+						<td>
+							<para>  <@csr.studyReference study/> </para>
+						</td>
+					</tr>
+				</#list>
 			</#if>
+				
+			<!-- Relative density -->
+			
+			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "Density") />
+			<#assign studyList2 = getSortedDensity(studyList) />
+			<#-- Populate resultStudyList, dataWaivingStudyList, testingProposalStudyList -->
+			<@populateResultAndDataWaivingAndTestingProposalStudyLists studyList2/>
+
+			<!-- Study results -->
+			<#if !resultStudyList?has_content>
+				<@com.emptyLine/>
+				No relevant information available.
+			<#else/>
+				<#list resultStudyList as study>
+					<tr>
+						<!-- Endpoint / Property -->
+						<td>
+							<emphasis role="bold">Relative density / bulk density</emphasis>
+							<para> <@com.picklist study.AdministrativeData.Endpoint /> </para>
+						</td>
+						<!-- Guideline, Method -->
+						<td>
+							<para> <emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/> </para>
+							<para> <@com.text study.MaterialsAndMethods.MethodNoGuideline/> </para>
+						</td>
+						<!-- Purity Test substance -->
+						<td>								
+							<para>
+							<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
+								Pure product tested
+							<#else>
+								<@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
+							</#if>
+							</para>
+						</td>							
+						<!-- Results -->
+						<td>
+							<para> <@ResultList2 study.ResultsAndDiscussion.Density/> </para>
+						</td>							
+						<!-- Reference -->
+						<td>
+							<para>  <@csr.studyReference study/> </para>
+						</td>
+					</tr>
+				</#list>
+			</#if>
+
+
+		</tbody>
+	</table>
+				
 </section>
 
 
@@ -273,6 +343,23 @@
     <#return returnList />
 </#function>
 
+<#function getSortedDensity studyList>
+	<#if !(studyList?has_content)>
+		<#return []>
+	</#if>
+	<#local returnList = [] />
+	<#list studyList as study>
+		<#local endpoint = study.AdministrativeData.Endpoint />
+	<#local PurposeFlag = study.AdministrativeData.PurposeFlag />
+		<#if com.picklistValueMatchesPhrases(endpoint, ["relative density","tap density","bulk density","density, other"]) && PurposeFlag?has_content >
+			<#local returnList = returnList + [study] />
+		</#if>
+	</#list>
+	<#-- sort resultStudyList according to PurposeFlag -->
+	<#assign returnList = iuclid.sortByField(returnList, "AdministrativeData.PurposeFlag", ["key study","supporting study","weight of evidence","disregarded due to major methodological deficiencies","other information"]) />
+    <#return returnList />
+</#function>
+
 <#macro ResultList Allresults>
 <#compress>
 	<#if Allresults?has_content>
@@ -280,7 +367,25 @@
 		<#list Allresults as blockItem>
 			<para>
 				<#if blockItem.Value?has_content>
-					Value: <@com.range blockItem.Value/>
+					<@com.range blockItem.Value/>
+				</#if>
+				<#if blockItem.RemarksOnResults?has_content>
+					(<@com.picklist blockItem.RemarksOnResults/>)
+				</#if>
+			</para>
+		</#list>
+  	</#if>
+</#compress>
+</#macro>
+
+<#macro ResultList2 Allresults>
+<#compress>
+	<#if Allresults?has_content>
+
+		<#list Allresults as blockItem>
+			<para>
+				<#if blockItem.Density?has_content>
+					<@com.range blockItem.Density/>
 				</#if>
 				<#if blockItem.RemarksOnResults?has_content>
 					(<@com.picklist blockItem.RemarksOnResults/>)
