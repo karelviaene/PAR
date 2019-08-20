@@ -158,7 +158,7 @@
 	<title role="HEAD-2">Phys Chem</title>
 
 	<table border="1">
-		<title>Summary table of animal studies on skin corrosion/irritation</title>
+		<title>Summary table of physical, chemical and technical properties</title>
 		<col width="20%" />
 		<col width="20%" />
 		<col width="10%" />
@@ -215,6 +215,100 @@
 				</#list>
 				</#if>
 							
+
+			<!-- COLOUR -->
+		
+			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "GeneralInformation") />
+
+			<!-- Study results -->
+			<#if !studyList?has_content>
+				<@com.emptyLine/>
+				No relevant information available.
+			<#else/>
+				<#list studyList as study>
+					<tr>
+						<!-- Endpoint / Property -->
+						<td>
+							<emphasis role="bold">Colour</emphasis>
+						</td>
+						<!-- Guideline, Method -->
+						<td>
+							<para> <emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/> </para>
+							<para> <@com.text study.MaterialsAndMethods.MethodNoGuideline/> </para>
+						</td>
+						<!-- Purity Test substance -->
+						<td>								
+							<para>
+							<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
+								Pure product tested
+							<#else>
+								<@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
+							</#if>
+							</para>
+						</td>							
+						<!-- Results -->
+						<td>
+		                   <#list study.ResultsAndDiscussion.FormBlock as formColourOdourBlock>
+		                             <#if formColourOdourBlock?has_content>
+		                                      <para><@com.text formColourOdourBlock.SubstanceColour/></para>
+		                             </#if>
+		                   </#list>
+						</td>							
+						<!-- Reference -->
+						<td>
+							<para>  <@csr.studyReference study/> </para>
+						</td>
+					</tr>
+				</#list>
+				</#if>
+
+
+			<!-- ODOUR -->
+		
+			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "GeneralInformation") />
+
+			<!-- Study results -->
+			<#if !studyList?has_content>
+				<@com.emptyLine/>
+				No relevant information available.
+			<#else/>
+				<#list studyList as study>
+					<tr>
+						<!-- Endpoint / Property -->
+						<td>
+							<emphasis role="bold">Odour</emphasis>
+						</td>
+						<!-- Guideline, Method -->
+						<td>
+							<para> <emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/> </para>
+							<para> <@com.text study.MaterialsAndMethods.MethodNoGuideline/> </para>
+						</td>
+						<!-- Purity Test substance -->
+						<td>								
+							<para>
+							<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
+								Pure product tested
+							<#else>
+								<@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
+							</#if>
+							</para>
+						</td>							
+						<!-- Results -->
+						<td>
+		                   <#list study.ResultsAndDiscussion.FormBlock as formColourOdourBlock>
+		                             <#if formColourOdourBlock?has_content>
+		                                      <para><@com.picklist formColourOdourBlock.Odour/></para>
+		                             </#if>
+		                   </#list>
+						</td>							
+						<!-- Reference -->
+						<td>
+							<para>  <@csr.studyReference study/> </para>
+						</td>
+					</tr>
+				</#list>
+				</#if>
+
 
 			<!-- ACIDITY / ALKALINITY -->
 			
