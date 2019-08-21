@@ -403,6 +403,92 @@
 			</#if>
 
 
+			<!-- SURFACE TENSION -->
+		
+			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "SurfaceTension") />
+
+			<!-- Study results -->
+			<#if !studyList?has_content>
+				<@com.emptyLine/>
+				No relevant information available.
+			<#else/>
+				<#list studyList as study>
+					<tr>
+						<!-- Endpoint / Property -->
+						<td>
+							<emphasis role="bold">Surface tension</emphasis>
+						</td>
+						<!-- Guideline, Method -->
+						<td>
+							<para> <emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/> </para>
+							<para> <@com.text study.MaterialsAndMethods.MethodNoGuideline/> </para>
+						</td>
+						<!-- Purity Test substance -->
+						<td>								
+							<para>
+							<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
+								Pure product tested
+							<#else>
+								<@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
+							</#if>
+							</para>
+						</td>							
+						<!-- Results -->
+						<td>
+							<para> <@ResultList3 study.ResultsAndDiscussion.SurfaceTension/> </para>
+						</td>							
+						<!-- Reference -->
+						<td>
+							<para>  <@csr.studyReference study/> </para>
+						</td>
+					</tr>
+				</#list>
+				</#if>
+			
+
+			<!-- VISCOSITY -->
+		
+			<#assign studyList = iuclid.getSectionDocumentsForParentKey(substance.documentKey, "ENDPOINT_STUDY_RECORD", "Viscosity") />
+
+			<!-- Study results -->
+			<#if !studyList?has_content>
+				<@com.emptyLine/>
+				No relevant information available.
+			<#else/>
+				<#list studyList as study>
+					<tr>
+						<!-- Endpoint / Property -->
+						<td>
+							<emphasis role="bold">Viscosity</emphasis>
+						</td>
+						<!-- Guideline, Method -->
+						<td>
+							<para> <emphasis role="bold">Guideline</emphasis>: <@csr.guidelineList study.MaterialsAndMethods.Guideline/> </para>
+							<para> <@com.text study.MaterialsAndMethods.MethodNoGuideline/> </para>
+						</td>
+						<!-- Purity Test substance -->
+						<td>								
+							<para>
+							<#if !study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy?has_content>
+								Pure product tested
+							<#else>
+								<@com.text study.MaterialsAndMethods.TestMaterials.SpecificDetailsOnTestMaterialUsedForTheStudy/>  
+							</#if>
+							</para>
+						</td>							
+						<!-- Results -->
+						<td>
+							<para> <@ResultList4 study.ResultsAndDiscussion.Viscosity/> </para>
+						</td>							
+						<!-- Reference -->
+						<td>
+							<para>  <@csr.studyReference study/> </para>
+						</td>
+					</tr>
+				</#list>
+				</#if>
+
+			
 		</tbody>
 	</table>
 				
@@ -457,7 +543,6 @@
 <#macro ResultList Allresults>
 <#compress>
 	<#if Allresults?has_content>
-
 		<#list Allresults as blockItem>
 			<para>
 				<#if blockItem.Value?has_content>
@@ -475,11 +560,44 @@
 <#macro ResultList2 Allresults>
 <#compress>
 	<#if Allresults?has_content>
-
 		<#list Allresults as blockItem>
 			<para>
 				<#if blockItem.Density?has_content>
 					<@com.range blockItem.Density/>
+				</#if>
+				<#if blockItem.RemarksOnResults?has_content>
+					(<@com.picklist blockItem.RemarksOnResults/>)
+				</#if>
+			</para>
+		</#list>
+  	</#if>
+</#compress>
+</#macro>
+
+<#macro ResultList3 Allresults>
+<#compress>
+	<#if Allresults?has_content>
+		<#list Allresults as blockItem>
+			<para>
+				<#if blockItem.Tension?has_content>
+					<@com.range blockItem.Tension/>
+				</#if>
+				<#if blockItem.RemarksOnResults?has_content>
+					(<@com.picklist blockItem.RemarksOnResults/>)
+				</#if>
+			</para>
+		</#list>
+  	</#if>
+</#compress>
+</#macro>
+
+<#macro ResultList4 Allresults>
+<#compress>
+	<#if Allresults?has_content>
+		<#list Allresults as blockItem>
+			<para>
+				<#if blockItem.Viscosity?has_content>
+					<@com.range blockItem.Viscosity/>
 				</#if>
 				<#if blockItem.RemarksOnResults?has_content>
 					(<@com.picklist blockItem.RemarksOnResults/>)
